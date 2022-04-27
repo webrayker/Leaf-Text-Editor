@@ -109,13 +109,6 @@ namespace Leaf_Text_Editor_v2
             }
         }
 
-        //set font
-        private void fontSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            fontDialog1.ShowDialog();
-            richTextBox1.Font = fontDialog1.Font;
-        }
-
         //select all text
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -123,6 +116,13 @@ namespace Leaf_Text_Editor_v2
             {
                 richTextBox1.SelectAll();
             }
+        }
+
+        //set font
+        private void fontSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fontDialog1.ShowDialog();
+            richTextBox1.Font = fontDialog1.Font;
         }
 
         //set background
