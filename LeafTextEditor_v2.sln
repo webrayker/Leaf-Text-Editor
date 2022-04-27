@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31605.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Leaf Text Editor v2", "Leaf Text Editor v2\Leaf Text Editor v2.csproj", "{748DCB0B-B9EF-478E-97AB-5BA4D9FB6D31}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{748DCB0B-B9EF-478E-97AB-5BA4D9FB6D31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748DCB0B-B9EF-478E-97AB-5BA4D9FB6D31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748DCB0B-B9EF-478E-97AB-5BA4D9FB6D31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748DCB0B-B9EF-478E-97AB-5BA4D9FB6D31}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37C7B2DF-7102-4734-96F7-AD619F1594E9}
+	EndGlobalSection
+EndGlobal
