@@ -57,6 +57,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -76,6 +79,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\smile1.pbm" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -88,6 +92,60 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\tongue_smile.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\regular_smile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image2vector.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tangue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\E381.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\regular_smile1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enjoy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smile2.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smile1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smile111.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\smile.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sad.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heart.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shocked.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crying.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\happy.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\angry.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wink.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

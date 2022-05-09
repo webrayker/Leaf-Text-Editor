@@ -63,9 +63,9 @@ namespace Leaf_Text_Editor_v2.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap regular_smile {
+        internal static System.Drawing.Bitmap angry {
             get {
-                object obj = ResourceManager.GetObject("regular_smile", resourceCulture);
+                object obj = ResourceManager.GetObject("angry", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Leaf_Text_Editor_v2.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap sad_smile {
+        internal static System.Drawing.Bitmap crying {
             get {
-                object obj = ResourceManager.GetObject("sad_smile", resourceCulture);
+                object obj = ResourceManager.GetObject("crying", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,49 @@ namespace Leaf_Text_Editor_v2.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap tongue_smile {
+        internal static System.Drawing.Bitmap happy {
             get {
-                object obj = ResourceManager.GetObject("tongue_smile", resourceCulture);
+                object obj = ResourceManager.GetObject("happy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap heart {
+            get {
+                object obj = ResourceManager.GetObject("heart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shocked {
+            get {
+                object obj = ResourceManager.GetObject("shocked", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] smile1 {
+            get {
+                object obj = ResourceManager.GetObject("smile1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wink {
+            get {
+                object obj = ResourceManager.GetObject("wink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
