@@ -1,13 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections;
+
 
 
 namespace Leaf_Text_Editor_v2
@@ -15,14 +17,15 @@ namespace Leaf_Text_Editor_v2
     public partial class Form1 : Form
     {
         static string open_path = "";
-        static string filename = "";
+        Hashtable emotions; // set of emojes
 
         public Form1()
         {
             InitializeComponent();
             openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
             saveFileDialog1.Filter = "Text File(*.txt)|*.txt";
-            richTextBox1.AcceptsTab = true; //tabulation
+            richTextBox1.AcceptsTab = true; //tabulation allowed
+            CreateEmotions();
         }
 
         //open file
@@ -132,21 +135,50 @@ namespace Leaf_Text_Editor_v2
             richTextBox1.BackColor = colorDialog1.Color;
         }
 
-        //symbols and lines count
+        //display of symbols and lines count
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
             string text = richTextBox1.Text;
             string[] lines = richTextBox1.Text.Split('\n');
             label2.Text = "Symbols: " + text.Length.ToString();
             label1.Text = "Lines: " + lines.Length.ToString();
+            AddEmotions(); //setting emojes in text area
         }
 
-        //rightclick contexmunestrip
+        //rightclick context menu strip (copy, paste, cut, select)
         private void richTextBox1_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 richTextBox1.ContextMenuStrip = contextMenuStrip1;
+            }
+        }
+
+        //creating a сonnection between a symbolic representation of emoji and emoji picture
+        void CreateEmotions()
+        {
+            emotions = new Hashtable(6);
+            emotions.Add(":-)", Leaf_Text_Editor_v2.Properties.Resources.regular_smile);
+            emotions.Add(":)", Leaf_Text_Editor_v2.Properties.Resources.regular_smile);
+            emotions.Add(":-(", Leaf_Text_Editor_v2.Properties.Resources.sad_smile);
+            emotions.Add(":(", Leaf_Text_Editor_v2.Properties.Resources.sad_smile);
+            emotions.Add(":-P", Leaf_Text_Editor_v2.Properties.Resources.tongue_smile);
+            emotions.Add(":P", Leaf_Text_Editor_v2.Properties.Resources.tongue_smile);
+        }
+
+        //replacing symbols of emoji by pictures of emoji
+        void AddEmotions()
+        {
+            foreach (string emote in emotions.Keys)
+            {
+                while (richTextBox1.Text.Contains(emote))
+                {
+                    int ind = richTextBox1.Text.IndexOf(emote);
+                    richTextBox1.Select(ind, emote.Length);
+                    Clipboard.SetImage((Image)emotions[emote]);
+                    richTextBox1.Paste();
+                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                }
             }
         }
 
