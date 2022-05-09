@@ -26,6 +26,7 @@ namespace Leaf_Text_Editor_v2
             saveFileDialog1.Filter = "Text File(*.txt)|*.txt";
             richTextBox1.AcceptsTab = true; //tabulation allowed
             CreateEmotions();
+            toolStripComboBox1.SelectedIndex = 0;
         }
 
         //open file
@@ -140,8 +141,8 @@ namespace Leaf_Text_Editor_v2
         {
             string text = richTextBox1.Text;
             string[] lines = richTextBox1.Text.Split('\n');
-            label2.Text = "Symbols: " + text.Length.ToString();
-            label1.Text = "Lines: " + lines.Length.ToString();
+            label2.Text = "Symbols:  " + text.Length.ToString();
+            label1.Text = "Lines:  " + lines.Length.ToString();
             AddEmotions(); //setting emojes in text area
         }
 
@@ -158,12 +159,12 @@ namespace Leaf_Text_Editor_v2
         void CreateEmotions()
         {
             emotions = new Hashtable(6);
-            emotions.Add(":-)", Leaf_Text_Editor_v2.Properties.Resources.regular_smile);
-            emotions.Add(":)", Leaf_Text_Editor_v2.Properties.Resources.regular_smile);
-            emotions.Add(":-(", Leaf_Text_Editor_v2.Properties.Resources.sad_smile);
-            emotions.Add(":(", Leaf_Text_Editor_v2.Properties.Resources.sad_smile);
-            emotions.Add(":-P", Leaf_Text_Editor_v2.Properties.Resources.tongue_smile);
-            emotions.Add(":P", Leaf_Text_Editor_v2.Properties.Resources.tongue_smile);
+            emotions.Add(":-)", Leaf_Text_Editor_v2.Properties.Resources.happy);
+            emotions.Add(":-(", Leaf_Text_Editor_v2.Properties.Resources.crying);
+            emotions.Add(";-)", Leaf_Text_Editor_v2.Properties.Resources.wink);
+            emotions.Add(">((", Leaf_Text_Editor_v2.Properties.Resources.angry);
+            emotions.Add(":O", Leaf_Text_Editor_v2.Properties.Resources.shocked);
+            emotions.Add("<3", Leaf_Text_Editor_v2.Properties.Resources.heart);
         }
 
         //replacing symbols of emoji by pictures of emoji
@@ -179,6 +180,48 @@ namespace Leaf_Text_Editor_v2
                     richTextBox1.Paste();
                     richTextBox1.SelectionStart = richTextBox1.Text.Length;
                 }
+            }
+        }
+
+        //set of themes
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (toolStripComboBox1.Text == "Light") //Light Theme
+            {
+                richTextBox1.BackColor = ColorTranslator.FromHtml("#FFFFFF"); //white
+                Color black = ColorTranslator.FromHtml("#000000");
+                richTextBox1.ForeColor = black;
+                menuStrip1.ForeColor = black;
+                label1.ForeColor = black;
+                label2.ForeColor = black;
+                Color green = ColorTranslator.FromHtml("#ABEBC6");
+                menuStrip1.BackColor = green;
+                panel1.BackColor = green;
+            }
+            else if (toolStripComboBox1.Text == "Dark") //Dark Theme
+            {
+                richTextBox1.BackColor = ColorTranslator.FromHtml("#1E1E1E"); //black
+                richTextBox1.ForeColor = ColorTranslator.FromHtml("#F4F6F7"); //white
+                Color black = ColorTranslator.FromHtml("#2D2D30");
+                menuStrip1.BackColor = black;
+                panel1.BackColor = black;
+                Color grey = ColorTranslator.FromHtml("#B3B6B7");
+                menuStrip1.ForeColor = grey;
+                label1.ForeColor = grey;
+                label2.ForeColor = grey;
+
+            }
+            else if (toolStripComboBox1.Text == "UA") //UA Theme
+            {
+                richTextBox1.BackColor = ColorTranslator.FromHtml("#005BBB"); //blue
+                richTextBox1.ForeColor = ColorTranslator.FromHtml("#FFFFFF"); //white
+                Color yellow = ColorTranslator.FromHtml("#FFD500");
+                menuStrip1.BackColor = yellow;
+                panel1.BackColor = yellow;
+                Color black = ColorTranslator.FromHtml("#000000");
+                menuStrip1.ForeColor = black;
+                label1.ForeColor = black;
+                label2.ForeColor = black;
             }
         }
 
