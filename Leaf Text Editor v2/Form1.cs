@@ -9,24 +9,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections;
-
-
+using System.Speech;
+using System.Speech.Synthesis;
 
 namespace Leaf_Text_Editor_v2
 {
     public partial class Form1 : Form
     {
-        static string open_path = "";
-        Hashtable emotions; // set of emojes
-
+        static string open_path = ""; //starting path
+        static string[] reservlist = { }; //dictionary reserv list
+        Hashtable emotions; //set of emojes
+        SpeechSynthesizer speech; //speech synthesis engine
+        
         public Form1()
         {
             InitializeComponent();
-            openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-            saveFileDialog1.Filter = "Text File(*.txt)|*.txt";
-            richTextBox1.AcceptsTab = true; //tabulation allowed
-            CreateEmotions();
-            toolStripComboBox1.SelectedIndex = 0;
+            CreateEmotions(); //create a сonnection between a symbolic representation of emoji and emoji picture
+            speech = new SpeechSynthesizer(); //speech synthesis engine
+            openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|All Files (*.*)|*.*";
+            saveFileDialog1.Filter = "Text File(*.txt)|*.txt|All Files (*.*)|*.*";
+            richTextBox1.AcceptsTab = true; //tabulation allowed  
+            toolStripComboBox1.SelectedIndex = 0; //selecting first index in combo box
+            reservlist = File.ReadAllText("files/dictionaries/cs-reserv-list.dicr").Split('\n'); //reading dictionary of reserved worlds
+            richTextBox2.Text = File.ReadAllText(@"files/dictionaries/cs-reserv-list.dicr"); //diplay dictionary  
+            autocompleteMenu1.Items = reservlist; //add worlds from dictionary to autocomplete menu 
         }
 
         //open file
@@ -34,42 +40,29 @@ namespace Leaf_Text_Editor_v2
         {
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
-            string filename2 = openFileDialog1.FileName;
-            string text = File.ReadAllText(filename2);
+            string filename = openFileDialog1.FileName;
+            string text = File.ReadAllText(filename);
             richTextBox1.Text = text;
-            open_path = filename2;
+            open_path = filename;
+            MessageBox.Show("File Opened!", "Success!");
         }
 
         //save file
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            if (open_path != "")
             {
-                if (open_path != "")
-                {
-                    File.WriteAllText(open_path, richTextBox1.Text);
-                }
-                else
-                {
-                    MessageBox.Show(
-                        "Error!",
-                        "File not saved",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
-                }
+                File.WriteAllText(open_path, richTextBox1.Text);
             }
-            catch (Exception)
+            else if (open_path == "")
             {
-                MessageBox.Show(
-                    "File not saved",
-                    "Error!!",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error,
-                    MessageBoxDefaultButton.Button1,
-                    MessageBoxOptions.DefaultDesktopOnly);
+                if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
+                    return;
+                string filename = saveFileDialog1.FileName;
+                File.WriteAllText(filename, richTextBox1.Text);
+                open_path = filename;
             }
+            MessageBox.Show("File Saved!", "Success!");
         }
 
         //sava file as
@@ -79,6 +72,8 @@ namespace Leaf_Text_Editor_v2
                 return;
             string filename = saveFileDialog1.FileName;
             File.WriteAllText(filename, richTextBox1.Text);
+            MessageBox.Show("File Saved!", "Success!");
+            open_path = filename;
         }
 
         //copy text
@@ -225,5 +220,62 @@ namespace Leaf_Text_Editor_v2
             }
         }
 
+        //open dictionary 
+        private void openDictionaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panel2.Visible = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e) //close
+        {
+            panel2.Visible = false;
+            File.WriteAllText(@"files/dictionaries/cs-reserv-list.dicr", richTextBox2.Text);
+        }
+
+        private void button1_Click(object sender, EventArgs e) //add
+        {
+            string newsnippet = textBox1.Text;
+            textBox1.Text = "";
+            richTextBox2.Text = richTextBox2.Text + "\n" + newsnippet;
+            File.WriteAllText(@"files/dictionaries/cs-reserv-list.dicr", richTextBox2.Text);
+            reservlist = File.ReadAllText("files/dictionaries/cs-reserv-list.dicr").Split('\n');
+            autocompleteMenu1.Items = reservlist;
+        }
+
+        //loading installed voices to choose
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            foreach (var voice in speech.GetInstalledVoices())
+            {
+                toolStripComboBox2.Items.Add(voice.VoiceInfo.Name);
+            }
+            toolStripComboBox2.SelectedIndex = 0;
+        }
+
+        //dub the text
+        private void dubTheTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            speech.SelectVoice(toolStripComboBox2.Text);
+            speech.SpeakAsync(richTextBox1.Text);
+        }
+
+        //pause dubbing
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (speech.State == SynthesizerState.Speaking)
+            {
+                speech.Pause();
+            }
+        }
+
+        //resume dubbing
+        private void resumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (speech.State == SynthesizerState.Paused)
+            {
+                speech.Resume();
+            }
+
+        }
     }
 }
