@@ -16,6 +16,7 @@ namespace Leaf_Text_Editor_v2
 {
     public partial class Form1 : Form
     {
+        private const string pathToThemes = "files/themes"; //path to program themes
         static string open_path = ""; //starting path
         static string[] reservlist = { }; //dictionary reserv list
         Hashtable emotions; //set of emojes
@@ -29,10 +30,29 @@ namespace Leaf_Text_Editor_v2
             openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|All Files (*.*)|*.*";
             saveFileDialog1.Filter = "Text File(*.txt)|*.txt|All Files (*.*)|*.*";
             richTextBox1.AcceptsTab = true; //tabulation allowed  
-            toolStripComboBox1.SelectedIndex = 0; //selecting first index in combo box
-            reservlist = File.ReadAllText("files/dictionaries/cs-reserv-list.dicr").Split('\n'); //reading dictionary of reserved worlds
-            richTextBox2.Text = File.ReadAllText(@"files/dictionaries/cs-reserv-list.dicr"); //diplay dictionary  
+            reservlist = File.ReadAllText("files/dictionaries/rus-eng-reserved-list.dicr").Split('\n'); //reading dictionary of reserved worlds
+            richTextBox2.Text = File.ReadAllText(@"files/dictionaries/rus-eng-reserved-list.dicr"); //diplay dictionary  
             autocompleteMenu1.Items = reservlist; //add worlds from dictionary to autocomplete menu 
+            getThemesNames(); //getting names of exhisting themes
+            toolStripComboBox1.SelectedIndex = 2; //selecting theme index in combo box
+        }
+
+        //getting names of exhisting themes in themes folder
+        private void getThemesNames()
+        {
+            if (Directory.Exists(pathToThemes))
+            {
+               string[] files = Directory.GetFiles(pathToThemes);
+               if (files.Length > 0)
+                {
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        IniParser parser = new IniParser(files[i]);
+                        string themeName = parser.GetSetting("Theme", "name");
+                        toolStripComboBox1.Items.Add(themeName);
+                    }
+                }
+            }
         }
 
         //open file
@@ -178,71 +198,49 @@ namespace Leaf_Text_Editor_v2
             }
         }
 
-        //set of themes
+        //changing colors according to the selected theme
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (toolStripComboBox1.Text == "Light") //Light Theme
-            {
-                richTextBox1.BackColor = ColorTranslator.FromHtml("#FFFFFF"); //white
-                Color black = ColorTranslator.FromHtml("#000000");
-                richTextBox1.ForeColor = black;
-                menuStrip1.ForeColor = black;
-                label1.ForeColor = black;
-                label2.ForeColor = black;
-                Color green = ColorTranslator.FromHtml("#ABEBC6");
-                menuStrip1.BackColor = green;
-                panel1.BackColor = green;
-            }
-            else if (toolStripComboBox1.Text == "Dark") //Dark Theme
-            {
-                richTextBox1.BackColor = ColorTranslator.FromHtml("#1E1E1E"); //black
-                richTextBox1.ForeColor = ColorTranslator.FromHtml("#F4F6F7"); //white
-                Color black = ColorTranslator.FromHtml("#2D2D30");
-                menuStrip1.BackColor = black;
-                panel1.BackColor = black;
-                Color grey = ColorTranslator.FromHtml("#B3B6B7");
-                menuStrip1.ForeColor = grey;
-                label1.ForeColor = grey;
-                label2.ForeColor = grey;
+            string path = "files/themes/" + toolStripComboBox1.Text + ".ini";
+            IniParser parser = new IniParser(path); //opens .ini file at the given path
 
-            }
-            else if (toolStripComboBox1.Text == "UA") //UA Theme
-            {
-                richTextBox1.BackColor = ColorTranslator.FromHtml("#005BBB"); //blue
-                richTextBox1.ForeColor = ColorTranslator.FromHtml("#FFFFFF"); //white
-                Color yellow = ColorTranslator.FromHtml("#FFD500");
-                menuStrip1.BackColor = yellow;
-                panel1.BackColor = yellow;
-                Color black = ColorTranslator.FromHtml("#000000");
-                menuStrip1.ForeColor = black;
-                label1.ForeColor = black;
-                label2.ForeColor = black;
-            }
+            richTextBox1.BackColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1BackColor")); //parser.GetSetting() returns the value for the given section, key pair
+            richTextBox1.ForeColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1ForeColor")); 
+            Color color1 = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part2BackColor"));
+            menuStrip1.BackColor = color1;
+            panel1.BackColor = color1;
+            Color color2 = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part2ForeColor"));
+            menuStrip1.ForeColor = color2;
+            label1.ForeColor = color2;
+            label2.ForeColor = color2;
+            panel2.BackColor = color1;
         }
 
-        //open dictionary 
+        //open dictionary editor
         private void openDictionaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel2.Visible = true;
         }
 
-        private void button2_Click(object sender, EventArgs e) //close
+        //close dictionary editor
+        private void button2_Click(object sender, EventArgs e)
         {
             panel2.Visible = false;
-            File.WriteAllText(@"files/dictionaries/cs-reserv-list.dicr", richTextBox2.Text);
+            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBox2.Text);
         }
 
-        private void button1_Click(object sender, EventArgs e) //add
+        //add new word to dictionary
+        private void button1_Click(object sender, EventArgs e)
         {
             string newsnippet = textBox1.Text;
             textBox1.Text = "";
             richTextBox2.Text = richTextBox2.Text + "\n" + newsnippet;
-            File.WriteAllText(@"files/dictionaries/cs-reserv-list.dicr", richTextBox2.Text);
-            reservlist = File.ReadAllText("files/dictionaries/cs-reserv-list.dicr").Split('\n');
+            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBox2.Text);
+            reservlist = File.ReadAllText("files/dictionaries/rus-eng-reserved-list.dicr").Split('\n');
             autocompleteMenu1.Items = reservlist;
         }
 
-        //loading installed voices to choose
+        //load installed voices to choose
         private void Form1_Load(object sender, EventArgs e)
         {
             foreach (var voice in speech.GetInstalledVoices())
@@ -250,6 +248,7 @@ namespace Leaf_Text_Editor_v2
                 toolStripComboBox2.Items.Add(voice.VoiceInfo.Name);
             }
             toolStripComboBox2.SelectedIndex = 0;
+
         }
 
         //dub the text
@@ -277,5 +276,8 @@ namespace Leaf_Text_Editor_v2
             }
 
         }
+
     }
+
+   
 }
