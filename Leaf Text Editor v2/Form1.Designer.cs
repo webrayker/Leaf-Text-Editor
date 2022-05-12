@@ -52,6 +52,12 @@ namespace Leaf_Text_Editor_v2
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.vocabularyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDictionaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speakToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.chooseVoiceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
+            this.dubTheTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
@@ -68,12 +74,6 @@ namespace Leaf_Text_Editor_v2
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.chooseVoiceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.speakToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.chooseVoiceToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripComboBox2 = new System.Windows.Forms.ToolStripComboBox();
-            this.dubTheTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resumeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
@@ -97,7 +97,7 @@ namespace Leaf_Text_Editor_v2
             this.richTextBox1.Location = new System.Drawing.Point(0, 24);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(979, 426);
+            this.richTextBox1.Size = new System.Drawing.Size(984, 437);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -106,22 +106,26 @@ namespace Leaf_Text_Editor_v2
             // richTextBox2
             // 
             this.autocompleteMenu1.SetAutocompleteMenu(this.richTextBox2, null);
-            this.richTextBox2.Location = new System.Drawing.Point(27, 25);
+            this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBox2.Font = new System.Drawing.Font("e-Ukraine Head", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBox2.Location = new System.Drawing.Point(15, 16);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(437, 177);
+            this.richTextBox2.Size = new System.Drawing.Size(469, 229);
             this.richTextBox2.TabIndex = 0;
             this.richTextBox2.Text = "";
             // 
             // textBox1
             // 
             this.autocompleteMenu1.SetAutocompleteMenu(this.textBox1, null);
-            this.textBox1.Location = new System.Drawing.Point(27, 239);
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Location = new System.Drawing.Point(15, 262);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(275, 21);
+            this.textBox1.Size = new System.Drawing.Size(292, 21);
             this.textBox1.TabIndex = 3;
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.menuStrip1.Font = new System.Drawing.Font("e-Ukraine Head", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
@@ -134,7 +138,7 @@ namespace Leaf_Text_Editor_v2
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(979, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(984, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -242,10 +246,6 @@ namespace Leaf_Text_Editor_v2
             // toolStripComboBox1
             // 
             this.toolStripComboBox1.Font = new System.Drawing.Font("e-Ukraine Head", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.toolStripComboBox1.Items.AddRange(new object[] {
-            "Light",
-            "Dark",
-            "UA"});
             this.toolStripComboBox1.MergeIndex = 0;
             this.toolStripComboBox1.Name = "toolStripComboBox1";
             this.toolStripComboBox1.Size = new System.Drawing.Size(121, 22);
@@ -266,20 +266,67 @@ namespace Leaf_Text_Editor_v2
             this.openDictionaryToolStripMenuItem.Text = "Open dictionary";
             this.openDictionaryToolStripMenuItem.Click += new System.EventHandler(this.openDictionaryToolStripMenuItem_Click);
             // 
+            // speakToolStripMenuItem1
+            // 
+            this.speakToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.chooseVoiceToolStripMenuItem1,
+            this.dubTheTextToolStripMenuItem,
+            this.pauseToolStripMenuItem,
+            this.resumeToolStripMenuItem});
+            this.speakToolStripMenuItem1.Name = "speakToolStripMenuItem1";
+            this.speakToolStripMenuItem1.Size = new System.Drawing.Size(59, 20);
+            this.speakToolStripMenuItem1.Text = "Speak";
+            // 
+            // chooseVoiceToolStripMenuItem1
+            // 
+            this.chooseVoiceToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripComboBox2});
+            this.chooseVoiceToolStripMenuItem1.Name = "chooseVoiceToolStripMenuItem1";
+            this.chooseVoiceToolStripMenuItem1.Size = new System.Drawing.Size(162, 22);
+            this.chooseVoiceToolStripMenuItem1.Text = "Choose voice";
+            // 
+            // toolStripComboBox2
+            // 
+            this.toolStripComboBox2.Font = new System.Drawing.Font("e-Ukraine Head", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.toolStripComboBox2.Name = "toolStripComboBox2";
+            this.toolStripComboBox2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripComboBox2.Text = "Choose Speaker";
+            // 
+            // dubTheTextToolStripMenuItem
+            // 
+            this.dubTheTextToolStripMenuItem.Name = "dubTheTextToolStripMenuItem";
+            this.dubTheTextToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.dubTheTextToolStripMenuItem.Text = "Dub the text";
+            this.dubTheTextToolStripMenuItem.Click += new System.EventHandler(this.dubTheTextToolStripMenuItem_Click);
+            // 
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
+            // 
+            // resumeToolStripMenuItem
+            // 
+            this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
+            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.resumeToolStripMenuItem.Text = "Resume";
+            this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 419);
+            this.panel1.Location = new System.Drawing.Point(0, 431);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(979, 31);
+            this.panel1.Size = new System.Drawing.Size(984, 30);
             this.panel1.TabIndex = 2;
             // 
             // label2
@@ -344,35 +391,40 @@ namespace Leaf_Text_Editor_v2
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.Honeydew;
+            this.panel2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.textBox1);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.richTextBox2);
-            this.panel2.Location = new System.Drawing.Point(247, 69);
+            this.panel2.Location = new System.Drawing.Point(242, 80);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(501, 285);
+            this.panel2.Size = new System.Drawing.Size(500, 300);
             this.panel2.TabIndex = 3;
             this.panel2.Visible = false;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(389, 237);
+            this.button2.BackColor = System.Drawing.Color.White;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(409, 262);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(75, 21);
             this.button2.TabIndex = 2;
             this.button2.Text = "Close";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(308, 237);
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(321, 262);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 21);
             this.button1.TabIndex = 1;
             this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // chooseVoiceToolStripMenuItem
@@ -380,59 +432,12 @@ namespace Leaf_Text_Editor_v2
             this.chooseVoiceToolStripMenuItem.Name = "chooseVoiceToolStripMenuItem";
             this.chooseVoiceToolStripMenuItem.Size = new System.Drawing.Size(32, 19);
             // 
-            // speakToolStripMenuItem1
-            // 
-            this.speakToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.chooseVoiceToolStripMenuItem1,
-            this.dubTheTextToolStripMenuItem,
-            this.pauseToolStripMenuItem,
-            this.resumeToolStripMenuItem});
-            this.speakToolStripMenuItem1.Name = "speakToolStripMenuItem1";
-            this.speakToolStripMenuItem1.Size = new System.Drawing.Size(59, 20);
-            this.speakToolStripMenuItem1.Text = "Speak";
-            // 
-            // chooseVoiceToolStripMenuItem1
-            // 
-            this.chooseVoiceToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripComboBox2});
-            this.chooseVoiceToolStripMenuItem1.Name = "chooseVoiceToolStripMenuItem1";
-            this.chooseVoiceToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.chooseVoiceToolStripMenuItem1.Text = "Choose voice";
-            // 
-            // toolStripComboBox2
-            // 
-            this.toolStripComboBox2.Font = new System.Drawing.Font("e-Ukraine Head", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.toolStripComboBox2.Name = "toolStripComboBox2";
-            this.toolStripComboBox2.Size = new System.Drawing.Size(180, 22);
-            this.toolStripComboBox2.Text = "Choose Speaker";
-            // 
-            // dubTheTextToolStripMenuItem
-            // 
-            this.dubTheTextToolStripMenuItem.Name = "dubTheTextToolStripMenuItem";
-            this.dubTheTextToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.dubTheTextToolStripMenuItem.Text = "Dub the text";
-            this.dubTheTextToolStripMenuItem.Click += new System.EventHandler(this.dubTheTextToolStripMenuItem_Click);
-            // 
-            // pauseToolStripMenuItem
-            // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pauseToolStripMenuItem.Text = "Pause";
-            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
-            // 
-            // resumeToolStripMenuItem
-            // 
-            this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
-            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.resumeToolStripMenuItem.Text = "Resume";
-            this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(979, 450);
+            this.ClientSize = new System.Drawing.Size(984, 461);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.richTextBox1);
@@ -441,7 +446,9 @@ namespace Leaf_Text_Editor_v2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.MinimumSize = new System.Drawing.Size(1000, 500);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Leaf Text Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
