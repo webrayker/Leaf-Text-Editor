@@ -68,6 +68,11 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="files\dictionaries\rus-eng-reserved-list.dicr" />
+    <None Include="files\themes\Bee.ini" />
+    <None Include="files\themes\Dark.ini" />
+    <None Include="files\themes\Light.ini" />
+    <None Include="files\themes\UA.ini" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -150,5 +155,6 @@
   <ItemGroup>
     <None Include="Resources\wink.gif" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
