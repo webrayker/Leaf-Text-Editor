@@ -14,7 +14,7 @@ using System.Speech.Synthesis;
 
 namespace Leaf_Text_Editor_v2
 {
-    public partial class Form1 : Form
+    public partial class TextEditor : Form
     {
         private const string pathToThemes = "files/themes"; //path to program themes
         static string open_path = ""; //starting path
@@ -22,16 +22,16 @@ namespace Leaf_Text_Editor_v2
         Hashtable emotions; //set of emojes
         SpeechSynthesizer speech; //speech synthesis engine
         
-        public Form1()
+        public TextEditor()
         {
             InitializeComponent();
             CreateEmotions(); //create a сonnection between a symbolic representation of emoji and emoji picture
             speech = new SpeechSynthesizer(); //speech synthesis engine
             openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|All Files (*.*)|*.*";
             saveFileDialog1.Filter = "Text File(*.txt)|*.txt|All Files (*.*)|*.*";
-            richTextBox1.AcceptsTab = true; //tabulation allowed  
+            richTextBoxMain.AcceptsTab = true; //tabulation allowed  
             reservlist = File.ReadAllText("files/dictionaries/rus-eng-reserved-list.dicr").Split('\n'); //reading dictionary of reserved worlds
-            richTextBox2.Text = File.ReadAllText(@"files/dictionaries/rus-eng-reserved-list.dicr"); //diplay dictionary  
+            richTextBoxDictionary.Text = File.ReadAllText(@"files/dictionaries/rus-eng-reserved-list.dicr"); //diplay dictionary  
             autocompleteMenu1.Items = reservlist; //add worlds from dictionary to autocomplete menu 
             getThemesNames(); //getting names of exhisting themes
             toolStripComboBox1.SelectedIndex = 2; //selecting theme index in combo box
@@ -62,7 +62,7 @@ namespace Leaf_Text_Editor_v2
                 return;
             string filename = openFileDialog1.FileName;
             string text = File.ReadAllText(filename);
-            richTextBox1.Text = text;
+            richTextBoxMain.Text = text;
             open_path = filename;
             MessageBox.Show("File Opened!", "Success!");
         }
@@ -72,14 +72,14 @@ namespace Leaf_Text_Editor_v2
         {
             if (open_path != "")
             {
-                File.WriteAllText(open_path, richTextBox1.Text);
+                File.WriteAllText(open_path, richTextBoxMain.Text);
             }
             else if (open_path == "")
             {
                 if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                     return;
                 string filename = saveFileDialog1.FileName;
-                File.WriteAllText(filename, richTextBox1.Text);
+                File.WriteAllText(filename, richTextBoxMain.Text);
                 open_path = filename;
             }
             MessageBox.Show("File Saved!", "Success!");
@@ -91,7 +91,7 @@ namespace Leaf_Text_Editor_v2
             if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             string filename = saveFileDialog1.FileName;
-            File.WriteAllText(filename, richTextBox1.Text);
+            File.WriteAllText(filename, richTextBoxMain.Text);
             MessageBox.Show("File Saved!", "Success!");
             open_path = filename;
         }
@@ -99,9 +99,9 @@ namespace Leaf_Text_Editor_v2
         //copy text
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (richTextBox1.TextLength > 0)
+            if (richTextBoxMain.TextLength > 0)
             {
-                richTextBox1.Copy();
+                richTextBoxMain.Copy();
             }
         }
 
@@ -110,30 +110,30 @@ namespace Leaf_Text_Editor_v2
         {
             if (Clipboard.GetDataObject().GetDataPresent(DataFormats.Text) == true)
             {
-                if (richTextBox1.SelectionLength > 0)
+                if (richTextBoxMain.SelectionLength > 0)
                 {
                     if (MessageBox.Show("Do you want to paste over current selection?", "Cut Example", MessageBoxButtons.YesNo) == DialogResult.No)
-                        richTextBox1.SelectionStart = richTextBox1.SelectionStart + richTextBox1.SelectionLength;
+                        richTextBoxMain.SelectionStart = richTextBoxMain.SelectionStart + richTextBoxMain.SelectionLength;
                 }
-                richTextBox1.Paste();
+                richTextBoxMain.Paste();
             }
         }
 
         //cut text
         private void cutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (richTextBox1.TextLength > 0)
+            if (richTextBoxMain.TextLength > 0)
             {
-                richTextBox1.Cut();
+                richTextBoxMain.Cut();
             }
         }
 
         //select all text
         private void selectAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (richTextBox1.TextLength > 0)
+            if (richTextBoxMain.TextLength > 0)
             {
-                richTextBox1.SelectAll();
+                richTextBoxMain.SelectAll();
             }
         }
 
@@ -141,23 +141,23 @@ namespace Leaf_Text_Editor_v2
         private void fontSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             fontDialog1.ShowDialog();
-            richTextBox1.Font = fontDialog1.Font;
+            richTextBoxMain.Font = fontDialog1.Font;
         }
 
         //set background
         private void backgroundToolStripMenuItem_Click(object sender, EventArgs e)
         {
             colorDialog1.ShowDialog();
-            richTextBox1.BackColor = colorDialog1.Color;
+            richTextBoxMain.BackColor = colorDialog1.Color;
         }
 
         //display of symbols and lines count
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
-            string text = richTextBox1.Text;
-            string[] lines = richTextBox1.Text.Split('\n');
-            label2.Text = "Symbols:  " + text.Length.ToString();
-            label1.Text = "Lines:  " + lines.Length.ToString();
+            string text = richTextBoxMain.Text;
+            string[] lines = richTextBoxMain.Text.Split('\n');
+            symbols.Text = "Symbols:  " + text.Length.ToString();
+            this.lines.Text = "Lines:  " + lines.Length.ToString();
             AddEmotions(); //setting emojes in text area
         }
 
@@ -166,7 +166,7 @@ namespace Leaf_Text_Editor_v2
         {
             if (e.Button == MouseButtons.Right)
             {
-                richTextBox1.ContextMenuStrip = contextMenuStrip1;
+                richTextBoxMain.ContextMenuStrip = contextMenuStrip1;
             }
         }
 
@@ -187,13 +187,13 @@ namespace Leaf_Text_Editor_v2
         {
             foreach (string emote in emotions.Keys)
             {
-                while (richTextBox1.Text.Contains(emote))
+                while (richTextBoxMain.Text.Contains(emote))
                 {
-                    int ind = richTextBox1.Text.IndexOf(emote);
-                    richTextBox1.Select(ind, emote.Length);
+                    int ind = richTextBoxMain.Text.IndexOf(emote);
+                    richTextBoxMain.Select(ind, emote.Length);
                     Clipboard.SetImage((Image)emotions[emote]);
-                    richTextBox1.Paste();
-                    richTextBox1.SelectionStart = richTextBox1.Text.Length;
+                    richTextBoxMain.Paste();
+                    richTextBoxMain.SelectionStart = richTextBoxMain.Text.Length;
                 }
             }
         }
@@ -204,38 +204,38 @@ namespace Leaf_Text_Editor_v2
             string path = "files/themes/" + toolStripComboBox1.Text + ".ini";
             IniParser parser = new IniParser(path); //opens .ini file at the given path
 
-            richTextBox1.BackColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1BackColor")); //parser.GetSetting() returns the value for the given section, key pair
-            richTextBox1.ForeColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1ForeColor")); 
+            richTextBoxMain.BackColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1BackColor")); //parser.GetSetting() returns the value for the given section, key pair
+            richTextBoxMain.ForeColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1ForeColor")); 
             Color color1 = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part2BackColor"));
-            menuStrip1.BackColor = color1;
-            panel1.BackColor = color1;
+            menuStripMain.BackColor = color1;
+            panelCount.BackColor = color1;
             Color color2 = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part2ForeColor"));
-            menuStrip1.ForeColor = color2;
-            label1.ForeColor = color2;
-            label2.ForeColor = color2;
-            panel2.BackColor = color1;
+            menuStripMain.ForeColor = color2;
+            lines.ForeColor = color2;
+            symbols.ForeColor = color2;
+            panelDictionary.BackColor = color1;
         }
 
         //open dictionary editor
         private void openDictionaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            panel2.Visible = true;
+            panelDictionary.Visible = true;
         }
 
         //close dictionary editor
         private void button2_Click(object sender, EventArgs e)
         {
-            panel2.Visible = false;
-            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBox2.Text);
+            panelDictionary.Visible = false;
+            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBoxDictionary.Text);
         }
 
         //add new word to dictionary
         private void button1_Click(object sender, EventArgs e)
         {
-            string newsnippet = textBox1.Text;
-            textBox1.Text = "";
-            richTextBox2.Text = richTextBox2.Text + "\n" + newsnippet;
-            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBox2.Text);
+            string newsnippet = textBoxDictionary.Text;
+            textBoxDictionary.Text = "";
+            richTextBoxDictionary.Text = richTextBoxDictionary.Text + "\n" + newsnippet;
+            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBoxDictionary.Text);
             reservlist = File.ReadAllText("files/dictionaries/rus-eng-reserved-list.dicr").Split('\n');
             autocompleteMenu1.Items = reservlist;
         }
@@ -255,7 +255,7 @@ namespace Leaf_Text_Editor_v2
         private void dubTheTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             speech.SelectVoice(toolStripComboBox2.Text);
-            speech.SpeakAsync(richTextBox1.Text);
+            speech.SpeakAsync(richTextBoxMain.Text);
         }
 
         //pause dubbing
