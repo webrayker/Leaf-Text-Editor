@@ -16,7 +16,7 @@ namespace Leaf_Text_Editor_v2
 {
     public partial class TextEditor : Form
     {
-        private const string pathToThemes = "files/themes"; //path to program themes
+        private const string pathToThemes = "../../files/themes"; //path to program themes
         static string open_path = ""; //starting path
         static string[] reservlist = { }; //dictionary reserv list
         Hashtable emotions; //set of emojes
@@ -30,8 +30,8 @@ namespace Leaf_Text_Editor_v2
             openFileDialog1.Filter = "Текстовые файлы (*.txt)|*.txt|All Files (*.*)|*.*";
             saveFileDialog1.Filter = "Text File(*.txt)|*.txt|All Files (*.*)|*.*";
             richTextBoxMain.AcceptsTab = true; //tabulation allowed  
-            reservlist = File.ReadAllText("files/dictionaries/rus-eng-reserved-list.dicr").Split('\n'); //reading dictionary of reserved worlds
-            richTextBoxDictionary.Text = File.ReadAllText(@"files/dictionaries/rus-eng-reserved-list.dicr"); //diplay dictionary  
+            reservlist = File.ReadAllText("../../files/dictionaries/rus-eng-reserved-list.dicr").Split('\n'); //reading dictionary of reserved worlds
+            richTextBoxDictionary.Text = File.ReadAllText(@"../../files/dictionaries/rus-eng-reserved-list.dicr"); //diplay dictionary  
             autocompleteMenu1.Items = reservlist; //add worlds from dictionary to autocomplete menu 
             getThemesNames(); //getting names of exhisting themes
             toolStripComboBox1.SelectedIndex = 2; //selecting theme index in combo box
@@ -201,7 +201,7 @@ namespace Leaf_Text_Editor_v2
         //changing colors according to the selected theme
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string path = "files/themes/" + toolStripComboBox1.Text + ".ini";
+            string path = "../../files/themes/" + toolStripComboBox1.Text + ".ini";
             IniParser parser = new IniParser(path); //opens .ini file at the given path
 
             richTextBoxMain.BackColor = ColorTranslator.FromHtml(parser.GetSetting("Colors", "part1BackColor")); //parser.GetSetting() returns the value for the given section, key pair
@@ -226,7 +226,7 @@ namespace Leaf_Text_Editor_v2
         private void button2_Click(object sender, EventArgs e)
         {
             panelDictionary.Visible = false;
-            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBoxDictionary.Text);
+            File.WriteAllText(@"../../files/dictionaries/rus-eng-reserved-list.dicr", richTextBoxDictionary.Text);
         }
 
         //add new word to dictionary
@@ -235,8 +235,8 @@ namespace Leaf_Text_Editor_v2
             string newsnippet = textBoxDictionary.Text;
             textBoxDictionary.Text = "";
             richTextBoxDictionary.Text = richTextBoxDictionary.Text + "\n" + newsnippet;
-            File.WriteAllText(@"files/dictionaries/rus-eng-reserved-list.dicr", richTextBoxDictionary.Text);
-            reservlist = File.ReadAllText("files/dictionaries/rus-eng-reserved-list.dicr").Split('\n');
+            File.WriteAllText(@"../../files/dictionaries/rus-eng-reserved-list.dicr", richTextBoxDictionary.Text);
+            reservlist = File.ReadAllText("../../files/dictionaries/rus-eng-reserved-list.dicr").Split('\n');
             autocompleteMenu1.Items = reservlist;
         }
 
