@@ -16,7 +16,7 @@ namespace Leaf_Text_Editor_v2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new TextEditor());
         }
     }
 }
